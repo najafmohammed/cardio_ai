@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1081931894905",
+    "project_id": "cardio-ai",
+    "storage_bucket": "cardio-ai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081931894905:android:f58c216ffa279ec5db84a8",
+        "android_client_info": {
+          "package_name": "com.example.cardio_ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081931894905-gl8mghpccice94db1dgh2jc7ui313qr3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPYzCHR62QR0DGP23HWLmCJ54ebu4qzWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081931894905-gl8mghpccice94db1dgh2jc7ui313qr3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
