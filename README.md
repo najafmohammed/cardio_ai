@@ -1,4 +1,4 @@
-# cardio_ai
+# cardio ai
 
 Cardio vascular disease predictor
 
