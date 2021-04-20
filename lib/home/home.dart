@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         leading: CircleAvatar(
-            radius: 18, backgroundColor: Colors.red, child: Icon(Icons.person)),
+            radius: 18, backgroundColor: darkAccent, child: Icon(Icons.person)),
         actions: [
           GestureDetector(
             onTap: () async {

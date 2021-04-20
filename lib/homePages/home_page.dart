@@ -14,10 +14,46 @@ DateTime date = DateTime.now();
 
 class _HomePageState extends State<HomePage> {
   List<QuickInfoModel> model = <QuickInfoModel>[
-    QuickInfoModel(title: "Heart Rate", lastdate: date, value: 50, prev: 49,remark: "Good"),
-    QuickInfoModel(title: "Blood pressure", lastdate: date, value: 50, prev: 49,remark: "Good"),
-    QuickInfoModel(title: "Fasting Blood Sugar", lastdate: date, value: 50, prev: 49,remark: "Good"),
-    QuickInfoModel(title: "Cholesterol", lastdate: date, value: 50, prev: 49,remark: "Good"),
+    QuickInfoModel(
+        title: "AI Prediction",
+        lastdate: date,
+        value: 50,
+        prev: 49,
+        colorValue: Color(0xFFed1b24),
+        imageLoc:"assets/images/heartRate.png" ,
+        remark: "Good"),
+    QuickInfoModel(
+        title: "Heart Rate",
+        lastdate: date,
+        value: 50,
+        prev: 49,
+        colorValue: Color(0xFFed1b24),
+        imageLoc:"assets/images/heartRate.png" ,
+        remark: "Good"),
+    QuickInfoModel(
+        title: "Blood pressure",
+        lastdate: date,
+        value: 50,
+        prev: 49,
+        colorValue: Color(0xFFd8453e),
+        imageLoc:"assets/images/bloodPressure.png" ,
+        remark: "Good"),
+    QuickInfoModel(
+        title: "Fasting Blood Sugar",
+        lastdate: date,
+        value: 50,
+        prev: 49,
+        colorValue: Color(0xFF319997),
+        imageLoc:"assets/images/bloodSugar.png" ,
+        remark: "Good"),
+    QuickInfoModel(
+        title: "Cholesterol",
+        lastdate: date,
+        value: 50,
+        prev: 49,
+        colorValue: Color(0xFFff7f27),
+        imageLoc:"assets/images/cholesterol.png" ,
+        remark: "Good"),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,20 +75,22 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   children: [
                     CircleAvatar(
-                      child: Icon(
-                        Icons.headset,
-                        size: 30,
-                      ),
+                      child: Image.asset("assets/images/AI.png"),
+                      backgroundColor: darkBg,
                       radius: 40,
                     ),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width - 100,
+                      width: MediaQuery.of(context).size.width - 150,
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: ListTile(
                           title: Text(
-                            "info.title.toString()",
-                            style: whitePop,
+                            "AI Prediction",
+                            style: TextStyle(
+                                color: Color(0xFF02aeed),
+                                fontFamily: "Poppins",
+                                fontWeight: FontWeight.w700,
+                                fontSize: 22),
                           ),
                           subtitle: Column(
                             children: [
@@ -68,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                                     style: whitePopSmall,
                                   ),
                                   Text(
-                                    "ssdf",
+                                    "20-04-2021",
                                     style: whitePopSmall,
                                   ),
                                 ],
@@ -82,15 +120,38 @@ class _HomePageState extends State<HomePage> {
                                     style: whitePopSmall,
                                   ),
                                   Text(
-                                    "info.",
+                                    "89",
+                                    style: whitePopSmall,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Remarks",
+                                    style: whitePopSmall,
+                                  ),
+                                  Text(
+                                    "Optimal",
                                     style: whitePopSmall,
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                          trailing: CircleAvatar(child: Text("89")),
+
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        children: [
+                          Text("78",style: whitePop(Colors.white) ),
+                          Icon(Icons.arrow_upward,color: Colors.green,)
+                        ],
                       ),
                     ),
                   ],

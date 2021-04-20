@@ -29,9 +29,7 @@ class QuickInfo extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundColor: darkBg,
-                  child: Icon(
-                    Icons.headset,
-                    size: 30,
+                  child: Image.asset(info.imageLoc
                   ),
                   radius: 40,
                 ),
@@ -46,7 +44,7 @@ class QuickInfo extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 5),
                             child: Text(
                               info.title,
-                              style: whitePop,
+                              style: whitePop(info.colorValue),
                             ),
                           ),
                           subtitle: SizedBox(
@@ -64,7 +62,7 @@ class QuickInfo extends StatelessWidget {
                                       style: whitePopSmall,
                                     ),
                                     Text(
-                                      DateFormat('yyyy-MM-dd')
+                                      DateFormat('dd-MM-yyyy')
                                           .format(info.lastdate)
                                           .toString(),
                                       style: whitePopSmall,
@@ -104,10 +102,15 @@ class QuickInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-                CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.purple,
-                    child: Text(info.value.toString(),style: whitePop ),),
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Row(
+                    children: [
+                      Text(info.value.toString(),style: whitePopLarge(info.colorValue) ),
+                      Icon(Icons.arrow_upward,color: Colors.green,)
+                    ],
+                  ),
+                ),
                     // child: Text("89",style: whitePop,)),
               ],
             ),
