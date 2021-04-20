@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cardio_ai/authentication/auth.dart';
-import 'package:cardio_ai/authentication/login.dart';
 import 'package:cardio_ai/models/UserModel.dart';
+import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:cardio_ai/wrapper/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/animation.dart';
@@ -32,7 +32,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
         vsync: this, duration: Duration(milliseconds: 900));
     _heartAnimation = Tween(begin: 160.0, end: 200.0).animate(CurvedAnimation(
         curve: Curves.bounceOut, parent: _heartAnimationController));
-    _titleReveal=ColorTween(begin: Colors.black ,end: Colors.red).animate(CurvedAnimation(curve: Curves.easeIn,parent: _titleRevealController));
+    _titleReveal=ColorTween(begin: darkBg ,end: Colors.red).animate(CurvedAnimation(curve: Curves.easeIn,parent: _titleRevealController));
 
     _heartAnimationController.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
@@ -93,7 +93,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
           child: MaterialApp(
             theme: ThemeData(
                 visualDensity: VisualDensity.adaptivePlatformDensity,
-                primaryColor: Colors.black),
+                primaryColor: darkBg),
             home: wrapper(),
           ),
         )
@@ -105,7 +105,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: darkBg,
         body: (
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

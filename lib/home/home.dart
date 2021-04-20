@@ -1,5 +1,6 @@
 import 'package:cardio_ai/authentication/auth.dart';
 import 'package:cardio_ai/authentication/login.dart';
+import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cardio_ai/homePages/home_page.dart';
@@ -50,9 +51,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         leading: CircleAvatar(
-            radius: 18,
-            backgroundColor: Colors.red,
-            child: Icon(Icons.person)),
+            radius: 18, backgroundColor: Colors.red, child: Icon(Icons.person)),
         actions: [
           GestureDetector(
             onTap: () async {
@@ -66,7 +65,7 @@ class _HomeState extends State<Home> {
             ),
           )
         ],
-        backgroundColor: Colors.red,
+        backgroundColor: darkAccent,
         centerTitle: true,
         title: Text(
           "Cardio AI",
@@ -90,8 +89,8 @@ class _HomeState extends State<Home> {
             color: Colors.white,
           ),
         ],
-        color: Colors.red,
-        buttonBackgroundColor: Colors.red,
+        color: darkAccent,
+        buttonBackgroundColor: darkAccent,
         backgroundColor: Colors.transparent,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 600),
@@ -102,13 +101,8 @@ class _HomeState extends State<Home> {
           });
         },
       ),
-      backgroundColor: Colors.black,
-      body: Container(
-        color: Colors.transparent,
-        child: Center(
-          child: _showpage,
-        ),
-      ),
+      backgroundColor: darkBg,
+      body: _showpage,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cardio_ai/authentication/auth.dart';
 import 'package:cardio_ai/home/home.dart';
+import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:cardio_ai/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _loginState extends State<login>  with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return loading ? Loading():Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: darkBg,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
