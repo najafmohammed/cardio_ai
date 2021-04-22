@@ -15,126 +15,294 @@ class QuickInfo extends StatefulWidget {
 }
 
 class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
+  bool top = false;
+  @override
+  void initState() {
+    if (widget.info.title == "AI Prediction") top = true;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final spinkit = SpinKitDualRing(
       color: widget.info.colorValue,
       size: 80.0,
-      controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 9200)),
+      controller: AnimationController(
+          vsync: this, duration: const Duration(milliseconds: 9200)),
     );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
       child: Card(
-        color: darkCard,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(90),
-              bottomRight: Radius.circular(20),
-              topLeft: Radius.circular(90),
-              topRight: Radius.circular(20)),
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Stack(
-alignment: Alignment.center,
-                  children:[
-                    spinkit,
-                    CircleAvatar(
-                    backgroundColor: darkBg,
-                    child: Image.asset(widget.info.imageLoc
-                    ),
-                    radius: 40,
-                  ),
-
-                ]
-                ),
-                Column(
+          color: darkCard,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(90),
+                bottomRight: Radius.circular(20),
+                topLeft: Radius.circular(90),
+                topRight: Radius.circular(20)),
+          ),
+          child: (top == true)
+              ? Column(
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - 150,
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: ListTile(
-                          title: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 5),
-                            child: Text(
-                              widget.info.title,
-                              style: whitePop(widget.info.colorValue),
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Stack(alignment: Alignment.center, children: [
+                          spinkit,
+                          CircleAvatar(
+                            backgroundColor: darkBg,
+                            child: Image.asset(widget.info.imageLoc),
+                            radius: 30,
                           ),
-                          subtitle: SizedBox(
-                            width: 50,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
+                        ]),
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 160,
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: ListTile(
+                                  title: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 0, vertical: 5),
+                                    child: Text(
+                                      widget.info.title,
+                                      style: whitePop(widget.info.colorValue),
+                                    ),
+                                  ),
+                                  subtitle: SizedBox(
+                                    width: 50,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "last Reading",
+                                              style: whitePopSmall,
+                                            ),
+                                            Text(
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(widget.info.lastdate)
+                                                  .toString(),
+                                              style: whitePopSmall,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Previous value",
+                                              style: whitePopSmall,
+                                            ),
+                                            Text(
+                                              widget.info.prev.toString(),
+                                              style: whitePopSmall,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Remarks",
+                                              style: whitePopSmall,
+                                            ),
+                                            Text(
+                                              widget.info.remark,
+                                              style: whitePopSmall,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Test Accuracy",
+                                              style: whitePopSmall,
+                                            ),
+                                            Text(
+                                              widget.info.remark,
+                                              style: whitePopSmall,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            ElevatedButton(onPressed: (){},
+                                              style: ElevatedButton.styleFrom(
+                                                primary: darkBg, // background
+                                                onPrimary: Colors.white, // foreground
+                                                padding:  const EdgeInsets.all(1.0)
+                                              ),
+                                                child:Row(
+                                                  children: [
+                                                    Icon(Icons.favorite_border),
+                                                    Text(
+                                                      " Prediction",
+                                                      style: whitePopSmall,
+                                                    ),
+                                                  ],
+                                                ), ),
+                                            ElevatedButton(onPressed: (){},
+                                              style: ElevatedButton.styleFrom(
+                                                padding:  const EdgeInsets.all(8.0),
+                                                primary: darkBg, // background
+                                                onPrimary: Colors.white, // foreground
+                                              ),
+                                              child:Row(
+                                                children: [
+                                                  Icon(Icons.history),
+                                                  Text(
+                                                    " History",
+                                                    style: whitePopSmall,
+                                                  ),
+                                                ],
+                                              ), )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "last Reading",
-                                      style: whitePopSmall,
-                                    ),
-                                    Text(
-                                      DateFormat('dd-MM-yyyy')
-                                          .format(widget.info.lastdate)
-                                          .toString(),
-                                      style: whitePopSmall,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Previous value",
-                                      style: whitePopSmall,
-                                    ),
-                                    Text(
-                                      widget.info.prev.toString(),
-                                      style: whitePopSmall,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Remarks",
-                                      style: whitePopSmall,
-                                    ),
-                                    Text(widget.info.remark,
-                                      style: whitePopSmall,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                              ),
                             ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: Row(
+                            children: [
+                              Text(widget.info.value.toString(),
+                                  style: whitePopLarge(widget.info.colorValue)),
+                              Icon(
+                                Icons.arrow_upward,
+                                color: Colors.green,
+                              )
+                            ],
                           ),
-                      ),
-                    ),
+                        ),
+                        // child: Text("89",style: whitePop,)),
+                      ],
                     ),
                   ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: Row(
-                    children: [
-                      Text(widget.info.value.toString(),style: whitePopLarge(widget.info.colorValue) ),
-                      Icon(Icons.arrow_upward,color: Colors.green,)
-                    ],
-                  ),
-                ),
-                    // child: Text("89",style: whitePop,)),
-              ],
-            ),
-          ],
-        ),
-      ),
+                )
+              : Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Stack(alignment: Alignment.center, children: [
+                          spinkit,
+                          CircleAvatar(
+                            backgroundColor: darkBg,
+                            child: Image.asset(widget.info.imageLoc),
+                            radius: 30,
+                          ),
+                        ]),
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 160,
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: ListTile(
+                                  title: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 0, vertical: 5),
+                                    child: Text(
+                                      widget.info.title,
+                                      style: whitePop(widget.info.colorValue),
+                                    ),
+                                  ),
+                                  subtitle: SizedBox(
+                                    width: 50,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "last Reading",
+                                              style: whitePopSmall,
+                                            ),
+                                            Text(
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(widget.info.lastdate)
+                                                  .toString(),
+                                              style: whitePopSmall,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Previous value",
+                                              style: whitePopSmall,
+                                            ),
+                                            Text(
+                                              widget.info.prev.toString(),
+                                              style: whitePopSmall,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Remarks",
+                                              style: whitePopSmall,
+                                            ),
+                                            Text(
+                                              widget.info.remark,
+                                              style: whitePopSmall,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: Row(
+                            children: [
+                              Text(widget.info.value.toString(),
+                                  style: whitePopLarge(widget.info.colorValue)),
+                              Icon(
+                                Icons.arrow_upward,
+                                color: Colors.green,
+                              )
+                            ],
+                          ),
+                        ),
+                        // child: Text("89",style: whitePop,)),
+                      ],
+                    ),
+                  ],
+                )),
     );
   }
 }

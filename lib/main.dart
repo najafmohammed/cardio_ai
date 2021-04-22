@@ -7,6 +7,7 @@ import 'package:cardio_ai/wrapper/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,7 @@ class Splash extends StatefulWidget {
 
 
 class _SplashState extends State<Splash> with TickerProviderStateMixin {
+
   Animation _heartAnimation,_titleReveal;
   AnimationController _heartAnimationController,_titleRevealController;
   @override
@@ -85,7 +87,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   }
   void Navigation()async{
 
-    Timer(Duration(seconds:2),()=> Navigator.of(context).push(
+    Timer(Duration(seconds:3),()=> Navigator.of(context).push(
         MaterialPageRoute(
             builder: (BuildContext context)=>StreamProvider<UserModel>.value(
           value: AuthService().user,
@@ -103,6 +105,11 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
+    final spinkit = SpinKitRipple(
+      color: Colors.red,
+      size: 200.0,
+      controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 500)),
+    );
     return Container(
       child: Scaffold(
         backgroundColor: darkBg,
@@ -112,8 +119,9 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
           children: [
           SizedBox(
             child:
-            Column(
+            Stack(
                 children:[
+                  spinkit,
                   secondChild(),
                 ]
             ),

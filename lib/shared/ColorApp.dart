@@ -9,7 +9,7 @@ TextStyle whitePop(Color color) {
       color: color,
       fontFamily: "Poppins",
       fontWeight: FontWeight.w700,
-      fontSize: 20
+      fontSize: 18
   );
 }
 TextStyle whitePopLarge(Color color) {
@@ -17,13 +17,13 @@ TextStyle whitePopLarge(Color color) {
       color: color,
       fontFamily: "Poppins",
       fontWeight: FontWeight.w700,
-      fontSize: 22
+      fontSize: 20
   );
 }
 TextStyle whitePopSmall = new TextStyle(
   color: Colors.white,
   fontFamily: "Poppins",
-  fontSize: 14,
+  fontSize: 13,
   fontWeight: FontWeight.w400,
 );
 
