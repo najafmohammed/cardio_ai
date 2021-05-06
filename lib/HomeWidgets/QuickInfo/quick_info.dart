@@ -1,5 +1,6 @@
 import 'package:cardio_ai/models/quickInfoModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
+import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -29,7 +30,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
       color: widget.info.colorValue,
       size: 80.0,
       controller: AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 9200)),
+          vsync: this, duration: const Duration(seconds: 30)),
     );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
@@ -184,8 +185,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                           padding: const EdgeInsets.all(1.0),
                           child: Row(
                             children: [
-                              Text(widget.info.value.toString(),
-                                  style: whitePopLarge(widget.info.colorValue)),
+                              Countup(begin: (0), end: widget.info.value.toDouble(),style: whitePopLarge(widget.info.colorValue),duration: Duration(seconds: 2),),
                               Icon(
                                 Icons.arrow_upward,
                                 color: Colors.green,
@@ -289,8 +289,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                           padding: const EdgeInsets.all(1.0),
                           child: Row(
                             children: [
-                              Text(widget.info.value.toString(),
-                                  style: whitePopLarge(widget.info.colorValue)),
+                              Countup(begin: (0), end: widget.info.value.toDouble(),style: whitePopLarge(widget.info.colorValue),duration: Duration(seconds: 2),),
                               Icon(
                                 Icons.arrow_upward,
                                 color: Colors.green,
