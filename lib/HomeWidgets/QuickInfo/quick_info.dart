@@ -16,6 +16,7 @@ class QuickInfo extends StatefulWidget {
   _QuickInfoState createState() => _QuickInfoState();
 }
 
+
 class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
   bool top = false;
   @override
