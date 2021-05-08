@@ -1,9 +1,10 @@
+
+import 'package:cardio_ai/homePages/inputPage/inputs.dart';
 import 'package:cardio_ai/models/quickInfoModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
 class QuickInfo extends StatefulWidget {
@@ -26,14 +27,15 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final spinkit = SpinKitDualRing(
-      color: widget.info.colorValue,
-      size: 80.0,
-      controller: AnimationController(
-          vsync: this, duration: const Duration(seconds: 30)),
-    );
+    // final spinkit = SpinKitDualRing(
+    //   color: widget.info.colorValue,
+    //   size: 60.0,
+    //   lineWidth: 2,
+    //   controller: AnimationController(
+    //       vsync: this, duration: const Duration(seconds: 30)),
+    // );
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
       child: Card(
           color: darkCard,
           shape: RoundedRectangleBorder(
@@ -49,7 +51,6 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Stack(alignment: Alignment.center, children: [
-                          spinkit,
                           CircleAvatar(
                             backgroundColor: darkBg,
                             child: Image.asset(widget.info.imageLoc),
@@ -57,9 +58,10 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                           ),
                         ]),
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width - 160,
+                              width: MediaQuery.of(context).size.width - 145,
                               child: Padding(
                                 padding: const EdgeInsets.all(2.0),
                                 child: ListTile(
@@ -140,9 +142,13 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                         (top == true)
                                             ?Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                           children: [
-                                            ElevatedButton(onPressed: (){},
+                                            ElevatedButton(onPressed: ()
+                                            {
+                                              Navigator.of(context).push(MaterialPageRoute(
+                                                  builder: (BuildContext context) =>  Inputs()));
+                                            },
                                               style: ElevatedButton.styleFrom(
                                                 primary: darkBg, // background
                                                 onPrimary: Colors.white, // foreground
@@ -152,26 +158,29 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                                   children: [
                                                     Icon(Icons.favorite_border),
                                                     Text(
-                                                      " Prediction",
+                                                      " Predict",
                                                       style: whitePopSmall,
                                                     ),
                                                   ],
                                                 ), ),
-                                            ElevatedButton(onPressed: (){},
-                                              style: ElevatedButton.styleFrom(
-                                                padding:  const EdgeInsets.all(8.0),
-                                                primary: darkBg, // background
-                                                onPrimary: Colors.white, // foreground
-                                              ),
-                                              child:Row(
-                                                children: [
-                                                  Icon(Icons.history),
-                                                  Text(
-                                                    " History",
-                                                    style: whitePopSmall,
-                                                  ),
-                                                ],
-                                              ), )
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 8),
+                                              child: ElevatedButton(onPressed: (){},
+                                                style: ElevatedButton.styleFrom(
+                                                  padding:  const EdgeInsets.all(1.0),
+                                                  primary: darkBg, // background
+                                                  onPrimary: Colors.white, // foreground
+                                                ),
+                                                child:Row(
+                                                  children: [
+                                                    Icon(Icons.history),
+                                                    Text(
+                                                      " History",
+                                                      style: whitePopSmall,
+                                                    ),
+                                                  ],
+                                                ), ),
+                                            )
                                           ],
                                         ):Container()
                                       ],
@@ -182,17 +191,14 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(1.0),
-                          child: Row(
-                            children: [
-                              Countup(begin: (0), end: widget.info.value.toDouble(),style: whitePopLarge(widget.info.colorValue),duration: Duration(seconds: 2),),
-                              Icon(
-                                Icons.arrow_upward,
-                                color: Colors.green,
-                              )
-                            ],
-                          ),
+                        Row(
+                          children: [
+                            Countup(begin: (0), end: widget.info.value.toDouble(),style: whitePopLarge(widget.info.colorValue),duration: Duration(seconds: 2),),
+                            Icon(
+                              Icons.arrow_upward,
+                              color: Colors.green,
+                            )
+                          ],
                         ),
                         // child: Text("89",style: whitePop,)),
                       ],
