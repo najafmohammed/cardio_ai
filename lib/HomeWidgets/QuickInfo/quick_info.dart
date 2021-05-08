@@ -43,8 +43,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                 topLeft: Radius.circular(90),
                 topRight: Radius.circular(20)),
           ),
-          child: (top == true)
-              ? Column(
+          child:  Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -123,7 +122,8 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                             ),
                                           ],
                                         ),
-                                        Row(
+                                        (top == true)
+                                            ?Row(
                                           mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                           children: [
@@ -136,8 +136,9 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                               style: whitePopSmall,
                                             ),
                                           ],
-                                        ),
-                                        Row(
+                                        ):Container(),
+                                        (top == true)
+                                            ?Row(
                                           mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                           children: [
@@ -172,7 +173,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                                 ],
                                               ), )
                                           ],
-                                        ),
+                                        ):Container()
                                       ],
                                     ),
                                   ),
@@ -198,110 +199,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                     ),
                   ],
                 )
-              : Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Stack(alignment: Alignment.center, children: [
-                          spinkit,
-                          CircleAvatar(
-                            backgroundColor: darkBg,
-                            child: Image.asset(widget.info.imageLoc),
-                            radius: 30,
-                          ),
-                        ]),
-                        Column(
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width - 160,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: ListTile(
-                                  title: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 0, vertical: 5),
-                                    child: Text(
-                                      widget.info.title,
-                                      style: whitePop(widget.info.colorValue),
-                                    ),
-                                  ),
-                                  subtitle: SizedBox(
-                                    width: 50,
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "last Reading",
-                                              style: whitePopSmall,
-                                            ),
-                                            Text(
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(widget.info.lastdate)
-                                                  .toString(),
-                                              style: whitePopSmall,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Previous value",
-                                              style: whitePopSmall,
-                                            ),
-                                            Text(
-                                              widget.info.prev.toString(),
-                                              style: whitePopSmall,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Remarks",
-                                              style: whitePopSmall,
-                                            ),
-                                            Text(
-                                              widget.info.remark,
-                                              style: whitePopSmall,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(1.0),
-                          child: Row(
-                            children: [
-                              Countup(begin: (0), end: widget.info.value.toDouble(),style: whitePopLarge(widget.info.colorValue),duration: Duration(seconds: 2),),
-                              Icon(
-                                Icons.arrow_upward,
-                                color: Colors.green,
-                              )
-                            ],
-                          ),
-                        ),
-                        // child: Text("89",style: whitePop,)),
-                      ],
-                    ),
-                  ],
-                )),
+              ),
     );
   }
 }
