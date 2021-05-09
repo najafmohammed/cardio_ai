@@ -1,3 +1,4 @@
+import 'package:animate_icons/animate_icons.dart';
 import 'package:cardio_ai/homePages/inputPage/InputPrompt_data.dart';
 import 'package:cardio_ai/models/inputPromptDataModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
@@ -26,8 +27,7 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
   bool active1=true;
   bool showInfo = true;
 
-  Animation _reveal;
-  AnimationController _revealController;
+  AnimateIconController _floatIconController;
 CrossFadeState _crossFadeState=CrossFadeState.showFirst;
 
 void CrossfadeController(){
@@ -51,10 +51,8 @@ void CrossfadeController(){
 }
   @override
   void initState() {
-    _revealController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _reveal = Tween(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(curve: Curves.easeInCirc, parent: _revealController));
+    _floatIconController = AnimateIconController();
+
     // TODO: implement initState
     super.initState();
   }
@@ -159,13 +157,90 @@ void CrossfadeController(){
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //
-      //   },
-      //   child: Icon(Icons.edit, color: Colors.white),
-      //   backgroundColor: Colors.deepPurple,
-      // )
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+        },
+        child:
+        AnimateIcons(
+          startIcon: Icons.edit,
+          endIcon: Icons.keyboard_arrow_right,
+          size: 30.0,
+          controller: _floatIconController,
+          // add this tooltip for the start icon
+          startTooltip: 'View all data',
+          // add this tooltip for the end icon
+          endTooltip: 'Complete ',
+          onStartIconPress: () {
+            showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      ListTile(
+                        leading: new Icon(Icons.photo),
+                        title: new Text('Photo'),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        leading: new Icon(Icons.music_note),
+                        title: new Text('Music'),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        leading: new Icon(Icons.videocam),
+                        title: new Text('Video'),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        leading: new Icon(Icons.share),
+                        title: new Text('Share'),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  );
+                }
+                ).then((value) => {
+              if (_floatIconController.isStart())
+              {
+                _floatIconController.animateToEnd()
+              } else if (_floatIconController.isEnd())
+              {
+                _floatIconController.animateToStart()
+              }
+                }
+                  );
+
+            print("Clicked on Add Icon");
+            return true;
+          },
+          onEndIconPress: () {
+
+            // if (_floatIconController.isStart()) {
+            //   _floatIconController.animateToEnd();
+            // } else if (_floatIconController.isEnd()) {
+            //   _floatIconController.animateToStart();
+            // }
+
+            print("Clicked on Close Icon");
+            return true;
+          },
+          duration: Duration(milliseconds: 500),
+          startIconColor: Colors.white,
+          endIconColor: Colors.blue,
+          clockwise: false,
+    ),
+        backgroundColor: Colors.deepPurple,
+      )
     );
   }
 }
