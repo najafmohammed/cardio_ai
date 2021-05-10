@@ -30,7 +30,7 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
   AnimateIconController _floatIconController;
 CrossFadeState _crossFadeState=CrossFadeState.showFirst;
 
-void CrossfadeController(){
+void crossFadeController(){
 
   setState(() {
     if(active1==true){
@@ -48,6 +48,25 @@ void CrossfadeController(){
       print("active 2 output qcount1=$qCount1 qcount2=$qCount2 qcount=$qCount activ1=$active1 crossfadeStatee=$_crossFadeState");
     }
   });
+}
+
+void swipeManager(i){
+  if (i<0){
+    setState(() {
+      if (qCount == 4) qCount = 3;
+      qCount += 1;
+
+      crossFadeController();
+    });
+  }
+  else{
+    setState(() {
+      if (qCount <= 0) qCount = 1;
+      qCount -= 1;
+      crossFadeController();
+    });
+  }
+
 }
   @override
   void initState() {
@@ -92,7 +111,7 @@ void CrossfadeController(){
                             setState(() {
                               if (qCount < 0) qCount = 1;
                               qCount -= 1;
-                              CrossfadeController();
+                              crossFadeController();
                             });
                           },
                           child: Container(
@@ -112,7 +131,7 @@ void CrossfadeController(){
                   AnimatedCrossFade(
                       firstChild: GestureDetector(
                         onHorizontalDragEnd: (i) {
-                          print(i.primaryVelocity);
+                          swipeManager(i.primaryVelocity);
                         },
                         child: InputCard(
                           prompt: _prompt[qCount1],
@@ -120,7 +139,7 @@ void CrossfadeController(){
                       ),
                       secondChild: GestureDetector(
                         onHorizontalDragEnd: (i) {
-                          print(i.primaryVelocity);
+                          swipeManager(i.primaryVelocity);
                         },
                         child: InputCard(
                           prompt: _prompt[qCount2],
@@ -135,7 +154,7 @@ void CrossfadeController(){
                             setState(() {
                               if (qCount > 4) qCount = 4;
                               qCount += 1;
-                              CrossfadeController();
+                              crossFadeController();
                             });
                           },
                           child: Container(
