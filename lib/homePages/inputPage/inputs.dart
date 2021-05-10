@@ -1,5 +1,6 @@
 import 'package:animate_icons/animate_icons.dart';
 import 'package:cardio_ai/homePages/inputPage/InputPrompt_data.dart';
+import 'package:cardio_ai/homePages/inputPage/modalSection/bottomModal.dart';
 import 'package:cardio_ai/models/inputPromptDataModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:flutter/cupertino.dart';
@@ -146,7 +147,7 @@ void swipeManager(i){
                         ),
                       ),
                       crossFadeState: _crossFadeState,
-                      duration: Duration(milliseconds: 800)),
+                      duration: Duration(milliseconds: 400)),
 
                   (rightDropActive)
                       ? GestureDetector(
@@ -194,39 +195,7 @@ void swipeManager(i){
             showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      ListTile(
-                        leading: new Icon(Icons.photo),
-                        title: new Text('Photo'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        leading: new Icon(Icons.music_note),
-                        title: new Text('Music'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        leading: new Icon(Icons.videocam),
-                        title: new Text('Video'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        leading: new Icon(Icons.share),
-                        title: new Text('Share'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  );
+                  return BottomModal();
                 }
                 ).then((value) => {
               if (_floatIconController.isStart())
@@ -253,7 +222,7 @@ void swipeManager(i){
             print("Clicked on Close Icon");
             return true;
           },
-          duration: Duration(milliseconds: 500),
+          duration: Duration(milliseconds: 900),
           startIconColor: Colors.white,
           endIconColor: Colors.blue,
           clockwise: false,

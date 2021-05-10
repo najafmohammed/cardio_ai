@@ -1,4 +1,3 @@
-
 import 'package:cardio_ai/homePages/inputPage/inputs.dart';
 import 'package:cardio_ai/models/quickInfoModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
@@ -16,7 +15,6 @@ class QuickInfo extends StatefulWidget {
   _QuickInfoState createState() => _QuickInfoState();
 }
 
-
 class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
   bool top = false;
   @override
@@ -28,13 +26,6 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // final spinkit = SpinKitDualRing(
-    //   color: widget.info.colorValue,
-    //   size: 60.0,
-    //   lineWidth: 2,
-    //   controller: AnimationController(
-    //       vsync: this, duration: const Duration(seconds: 30)),
-    // );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
       child: Card(
@@ -46,89 +37,89 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                 topLeft: Radius.circular(90),
                 topRight: Radius.circular(20)),
           ),
-          child:  Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Stack(alignment: Alignment.center, children: [
-                          CircleAvatar(
-                            backgroundColor: darkBg,
-                            child: Image.asset(widget.info.imageLoc),
-                            radius: 30,
-                          ),
-                        ]),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width - 145,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: ListTile(
-                                  title: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 0, vertical: 5),
-                                    child: Text(
-                                      widget.info.title,
-                                      style: whitePop(widget.info.colorValue),
-                                    ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Stack(alignment: Alignment.center, children: [
+                    CircleAvatar(
+                      backgroundColor: darkBg,
+                      child: Image.asset(widget.info.imageLoc),
+                      radius: 30,
+                    ),
+                  ]),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 145,
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: ListTile(
+                            title: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 5),
+                              child: Text(
+                                widget.info.title,
+                                style: whitePop(widget.info.colorValue),
+                              ),
+                            ),
+                            subtitle: SizedBox(
+                              width: 50,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
                                   ),
-                                  subtitle: SizedBox(
-                                    width: 50,
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "last Reading",
+                                        style: whitePopSmall,
+                                      ),
+                                      Text(
+                                        DateFormat('dd-MM-yyyy')
+                                            .format(widget.info.lastdate)
+                                            .toString(),
+                                        style: whitePopSmall,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Previous value",
+                                        style: whitePopSmall,
+                                      ),
+                                      Text(
+                                        widget.info.prev.toString(),
+                                        style: whitePopSmall,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Remarks",
+                                        style: whitePopSmall,
+                                      ),
+                                      Text(
+                                        widget.info.remark,
+                                        style: whitePopSmall,
+                                      ),
+                                    ],
+                                  ),
+                                  (top == true)
+                                      ? Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "last Reading",
-                                              style: whitePopSmall,
-                                            ),
-                                            Text(
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(widget.info.lastdate)
-                                                  .toString(),
-                                              style: whitePopSmall,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Previous value",
-                                              style: whitePopSmall,
-                                            ),
-                                            Text(
-                                              widget.info.prev.toString(),
-                                              style: whitePopSmall,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Remarks",
-                                              style: whitePopSmall,
-                                            ),
-                                            Text(
-                                              widget.info.remark,
-                                              style: whitePopSmall,
-                                            ),
-                                          ],
-                                        ),
-                                        (top == true)
-                                            ?Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               "Test Accuracy",
@@ -139,40 +130,52 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                               style: whitePopSmall,
                                             ),
                                           ],
-                                        ):Container(),
-                                        (top == true)
-                                            ?Row(
+                                        )
+                                      : Container(),
+                                  (top == true)
+                                      ? Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
-                                            ElevatedButton(onPressed: ()
-                                            {
-                                              Navigator.of(context).push(MaterialPageRoute(
-                                                  builder: (BuildContext context) =>  Inputs()));
-                                            },
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            Inputs()));
+                                              },
                                               style: ElevatedButton.styleFrom(
-                                                primary: darkBg, // background
-                                                onPrimary: Colors.white, // foreground
-                                                padding:  const EdgeInsets.all(1.0)
-                                              ),
-                                                child:Row(
-                                                  children: [
-                                                    Icon(Icons.favorite_border),
-                                                    Text(
-                                                      " Predict",
-                                                      style: whitePopSmall,
-                                                    ),
-                                                  ],
-                                                ), ),
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 8),
-                                              child: ElevatedButton(onPressed: (){},
-                                                style: ElevatedButton.styleFrom(
-                                                  padding:  const EdgeInsets.all(1.0),
                                                   primary: darkBg, // background
-                                                  onPrimary: Colors.white, // foreground
+                                                  onPrimary: Colors
+                                                      .white, // foreground
+                                                  padding: const EdgeInsets.all(
+                                                      1.0)),
+                                              child: Row(
+                                                children: [
+                                                  Icon(Icons.favorite_border),
+                                                  Text(
+                                                    " Predict",
+                                                    style: whitePopSmall,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 0,
+                                                      horizontal: 8),
+                                              child: ElevatedButton(
+                                                onPressed: () {},
+                                                style: ElevatedButton.styleFrom(
+                                                  padding:
+                                                      const EdgeInsets.all(1.0),
+                                                  primary: darkBg, // background
+                                                  onPrimary: Colors
+                                                      .white, // foreground
                                                 ),
-                                                child:Row(
+                                                child: Row(
                                                   children: [
                                                     Icon(Icons.history),
                                                     Text(
@@ -180,33 +183,39 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                                       style: whitePopSmall,
                                                     ),
                                                   ],
-                                                ), ),
+                                                ),
+                                              ),
                                             )
                                           ],
-                                        ):Container()
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                        )
+                                      : Container()
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Countup(begin: (0), end: widget.info.value.toDouble(),style: whitePopLarge(widget.info.colorValue),duration: Duration(seconds: 2),),
-                            Icon(
-                              Icons.arrow_upward,
-                              color: Colors.green,
-                            )
-                          ],
-                        ),
-                        // child: Text("89",style: whitePop,)),
-                      ],
-                    ),
-                  ],
-                )
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Countup(
+                        begin: (0),
+                        end: widget.info.value.toDouble(),
+                        style: whitePopLarge(widget.info.colorValue),
+                        duration: Duration(seconds: 2),
+                      ),
+                      Icon(
+                        Icons.arrow_upward,
+                        color: Colors.green,
+                      )
+                    ],
+                  ),
+                  // child: Text("89",style: whitePop,)),
+                ],
               ),
+            ],
+          )),
     );
   }
 }
