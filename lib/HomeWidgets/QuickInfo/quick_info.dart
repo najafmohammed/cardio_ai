@@ -143,7 +143,9 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                                     MaterialPageRoute(
                                                         builder: (BuildContext
                                                                 context) =>
-                                                            Inputs()));
+                                                            Inputs(
+                                                              index: 0,
+                                                            )));
                                               },
                                               style: ElevatedButton.styleFrom(
                                                   primary: darkBg, // background
@@ -207,10 +209,12 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                             style: whitePopLarge(widget.info.colorValue),
                             duration: Duration(seconds: 2),
                           ),
-                          Text(widget.info.unit,style: TextStyle(color: Colors.white),),
+                          Text(
+                            widget.info.unit,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ],
                       ),
-
                       Icon(
                         Icons.arrow_upward,
                         color: Colors.green,

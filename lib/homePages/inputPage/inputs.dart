@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class Inputs extends StatefulWidget {
-  const Inputs({Key key}) : super(key: key);
+  const Inputs({Key key, this.index}) : super(key: key);
+  final int index;
 
   @override
   _InputsState createState() => _InputsState();
@@ -17,37 +18,37 @@ class Inputs extends StatefulWidget {
 double dragTargetWidth = 50;
 Color dragTargetColor = darkCard;
 AnimateIconController _floatIconController;
+String textVal;
+
+TextEditingController _textEditingController;
+List<inputPromptDataModel> _prompt = prompt;
 
 class _InputsState extends State<Inputs> with TickerProviderStateMixin {
   int qCount = 0;
 
-  List<inputPromptDataModel> _prompt = prompt;
+
   bool showInfo = true;
   @override
   void initState() {
     _floatIconController = AnimateIconController();
-
+    setState(() {
+      qCount=widget.index;
+    });
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            (qCount + 1).toString() + "of 12",
+            (qCount + 1).toString() + "of" + _prompt.length.toString(),
             style: whitePop(Colors.white),
           ),
         ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   items: [
-        //    BottomNavigationBarItem(icon: Icon(Icons.keyboard_arrow_up),label: "up"),
-        //     BottomNavigationBarItem(icon: Icon(Icons.keyboard_arrow_up),label: "up"),
-        //     BottomNavigationBarItem(icon: Icon(Icons.keyboard_arrow_up),label: "up")
-        //   ],
-        // ),
         backgroundColor: darkBg,
         body: Center(
           child: SingleChildScrollView(
@@ -58,14 +59,10 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
                   height: 400,
                   child: new Swiper(
                       layout: SwiperLayout.CUSTOM,
-                      customLayoutOption: new CustomLayoutOption(
-                          startIndex: -1,
-                          stateCount: 3
-                      ).addRotate([
-                        -45.0/180,
-                        0.0,
-                        45.0/180
-                      ]).addTranslate([
+                      customLayoutOption:
+                          new CustomLayoutOption(startIndex: -1, stateCount: 3)
+                              .addRotate(
+                                  [-45.0 / 180, 0.0, 45.0 / 180]).addTranslate([
                         new Offset(-370.0, -40.0),
                         new Offset(0.0, 0.0),
                         new Offset(370.0, -40.0)
@@ -73,13 +70,19 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
                       itemWidth: 300.0,
                       itemHeight: 400.0,
                       itemBuilder: (BuildContext context, int index) {
+
                         return InputCard(
-                          prompt: _prompt[index],
+                          index: qCount,
+                          prompt: _prompt[qCount],
                         );
+
                       },
-                      onIndexChanged:(index){
+                      onIndexChanged: (index) {
                         setState(() {
-                        qCount=index;
+                          qCount = index;
+                          _textEditingController.text=(_prompt[qCount].val)??0.toString();
+                          print(_prompt[qCount].val);
+                          // _textEditingController.text="";
                         });
                       },
                       pagination: new SwiperPagination(),
@@ -87,10 +90,8 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
                       duration: 1,
                       viewportFraction: 0.8,
                       scale: 0.8,
-
                       scrollDirection: Axis.horizontal,
                       itemCount: _prompt.length),
-
                 ),
               ],
             ),
@@ -109,7 +110,7 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
               showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return BottomModal();
+                    return BottomModal(prompt: prompt);
                   }).then((value) => {_floatIconController.animateToStart()});
               print("Clicked on Add Icon");
               return true;
@@ -128,20 +129,37 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
   }
 }
 
-class InputCard extends StatelessWidget {
-  const InputCard({Key key, this.prompt}) : super(key: key);
+class InputCard extends StatefulWidget {
+  const InputCard({Key key, this.prompt, this.index}) : super(key: key);
   final inputPromptDataModel prompt;
+  final int index;
+
+  @override
+  _InputCardState createState() => _InputCardState();
+}
+
+class _InputCardState extends State<InputCard> {
+  @override
+  void initState() {
+    _textEditingController = new TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose(){
+    _textEditingController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(
               color: Colors.purple,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(30))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(30))),
         child: (Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -150,7 +168,7 @@ class InputCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(3.0),
               child: Text(
-                prompt.questionTitle,
+                widget.prompt.questionTitle,
                 style: whitePop(Colors.white),
               ),
             ),
@@ -171,19 +189,15 @@ class InputCard extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                              text: "   " + prompt.info, style: whitePopSmall),
+                              text: "   " + widget.prompt.info,
+                              style: whitePopSmall),
                         ]),
                       ),
                     ),
                   ),
-                )
-
-                // Text(
-                //   prompt.info,
-                //   style: whitePopSmall,
-                // ),
-                ),
+                )),
             TextFormField(
+              controller: _textEditingController,
               style: TextStyle(color: Colors.white),
               decoration: const InputDecoration(
                 icon: Icon(
@@ -192,14 +206,23 @@ class InputCard extends StatelessWidget {
                 ),
                 hintStyle: TextStyle(color: Colors.white38),
                 labelStyle: TextStyle(color: Colors.white),
-                hintText: 'What do people call you?',
-                labelText: 'Name ',
+                hintText: "Make sure value is in accurate",
+                labelText: "Input",
               ),
               validator: (String value) {
                 return (value != null && value.contains('@'))
                     ? 'Do not use the @ char.'
                     : null;
               },
+              keyboardType: TextInputType.number,
+              onChanged:(val1){
+
+                  textVal=val1;
+                  print("valchanged");
+                  _prompt[widget.index].val=val1;
+
+              },
+
             )
           ],
         )),
@@ -207,3 +230,4 @@ class InputCard extends StatelessWidget {
     );
   }
 }
+

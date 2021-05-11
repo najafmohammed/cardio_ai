@@ -1,11 +1,12 @@
+import 'package:cardio_ai/homePages/inputPage/inputs.dart';
+import 'package:cardio_ai/models/inputPromptDataModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:flutter/material.dart';
 
 class ModalTile extends StatefulWidget {
-  ModalTile({Key key, this.title, this.val, this.unit}) : super(key: key);
-  final String title;
-  final int val;
-  final String unit;
+  ModalTile({Key key, this.input, this.index}) : super(key: key);
+  final inputPromptDataModel input;
+  final int index;
   @override
   _ModalTileState createState() => _ModalTileState();
 }
@@ -28,10 +29,23 @@ class _ModalTileState extends State<ModalTile> {
             color: Colors.white,
           ),
           title: Text(
-            "hello",
-            style: whitePop(Colors.white),
+            widget.input.questionTitle,
+            style: whitePopSmall,
           ),
-          trailing: Icon(Icons.edit, color: Colors.white),
+          subtitle: Text(
+            widget.input.val.toString()+widget.input.unit,
+            style: whitePopSmall,
+          ),
+          trailing: GestureDetector(
+              onTap: (){
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                        builder: (BuildContext
+                        context) =>
+                            Inputs(index: widget.index)));
+
+              },
+              child: Icon(Icons.edit, color: Colors.white)),
         ));
   }
 }
