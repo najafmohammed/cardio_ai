@@ -88,7 +88,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   void Navigation() async {
     Timer(
         Duration(seconds: 3),
-        () => Navigator.of(context).push(MaterialPageRoute(
+        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (BuildContext context) => StreamProvider<UserModel>.value(
                   value: AuthService().user,
                   initialData: null,

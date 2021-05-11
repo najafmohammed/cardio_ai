@@ -82,7 +82,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                       ),
                                       Text(
                                         DateFormat('dd-MM-yyyy')
-                                            .format(widget.info.lastdate)
+                                            .format(widget.info.lastDate)
                                             .toString(),
                                         style: whitePopSmall,
                                       ),
@@ -199,12 +199,18 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                   ),
                   Row(
                     children: [
-                      Countup(
-                        begin: (0),
-                        end: widget.info.value.toDouble(),
-                        style: whitePopLarge(widget.info.colorValue),
-                        duration: Duration(seconds: 2),
+                      Column(
+                        children: [
+                          Countup(
+                            begin: (0),
+                            end: widget.info.value.toDouble(),
+                            style: whitePopLarge(widget.info.colorValue),
+                            duration: Duration(seconds: 2),
+                          ),
+                          Text(widget.info.unit,style: TextStyle(color: Colors.white),),
+                        ],
                       ),
+
                       Icon(
                         Icons.arrow_upward,
                         color: Colors.green,

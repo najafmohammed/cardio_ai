@@ -31,6 +31,7 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
   AnimateIconController _floatIconController;
 CrossFadeState _crossFadeState=CrossFadeState.showFirst;
 
+
 void crossFadeController(){
 
   setState(() {
@@ -52,6 +53,7 @@ void crossFadeController(){
 }
 
 void swipeManager(i){
+  print(i);
   if (i<0){
     setState(() {
       if (qCount == 4) qCount = 3;
@@ -60,6 +62,8 @@ void swipeManager(i){
       crossFadeController();
     });
   }
+  else
+    if(i==0){}
   else{
     setState(() {
       if (qCount <= 0) qCount = 1;
@@ -79,6 +83,25 @@ void swipeManager(i){
 
   @override
   Widget build(BuildContext context) {
+
+    final AnimationController _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    final Animation<Offset> _offsetAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(1.5, 0.0),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticIn,
+    ));
+
+    @override
+    void dispose() {
+      super.dispose();
+      _controller.dispose();
+    }
+
     (qCount == 0) ? leftDropActive = false : leftDropActive = true;
     (qCount == 4) ? rightDropActive = false : rightDropActive = true;
     print(qCount);
@@ -130,12 +153,16 @@ void swipeManager(i){
                       : Container(),
                   //input
                   AnimatedCrossFade(
-                      firstChild: GestureDetector(
-                        onHorizontalDragEnd: (i) {
-                          swipeManager(i.primaryVelocity);
-                        },
-                        child: InputCard(
-                          prompt: _prompt[qCount1],
+                      firstChild: SlideTransition(
+                          position: _offsetAnimation,
+                        child: GestureDetector(
+                          onHorizontalDragEnd: (i) {
+                            swipeManager(i.primaryVelocity);
+                          },
+                          onTap: (){},
+                          child: InputCard(
+                            prompt: _prompt[qCount1],
+                          ),
                         ),
                       ),
                       secondChild: GestureDetector(
@@ -147,6 +174,7 @@ void swipeManager(i){
                         ),
                       ),
                       crossFadeState: _crossFadeState,
+
                       duration: Duration(milliseconds: 400)),
 
                   (rightDropActive)
@@ -164,7 +192,7 @@ void swipeManager(i){
                             width: dragTargetWidth,
                             child: Center(
                               child: Icon(
-                                Icons.arrow_left,
+                                Icons.arrow_right,
                                 color: Colors.white,
                               ),
                             ),
