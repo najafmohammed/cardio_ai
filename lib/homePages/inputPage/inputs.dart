@@ -1,4 +1,5 @@
 import 'package:animate_icons/animate_icons.dart';
+import 'package:cardio_ai/home/home.dart';
 import 'package:cardio_ai/homePages/inputPage/InputPrompt_data.dart';
 import 'package:cardio_ai/homePages/inputPage/modalSection/bottomModal.dart';
 import 'package:cardio_ai/models/inputPromptDataModel.dart';
@@ -43,6 +44,15 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
 
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (BuildContext
+                    context) =>
+                        Home())
+            ),
+          ),
           centerTitle: true,
           title: Text(
             (qCount + 1).toString() + "of" + _prompt.length.toString(),
