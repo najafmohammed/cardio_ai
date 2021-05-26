@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
             onTap: () async {
               await _auth.signout();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => login()));
+                  builder: (BuildContext context) => Login()));
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),

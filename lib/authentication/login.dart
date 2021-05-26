@@ -5,23 +5,27 @@ import 'package:cardio_ai/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class login extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _loginState createState() => _loginState();
+  _LoginState createState() => _LoginState();
 }
 
-class _loginState extends State<login>  with TickerProviderStateMixin{
+class _LoginState extends State<Login>  with TickerProviderStateMixin{
 
   Animation _heartAnimation1;
   AnimationController _heartAnimationController1;
   @override
   void initState() {
+    super.initState();
     _heartAnimationController1 = AnimationController(
         vsync: this, duration: Duration(milliseconds: 900));
     _heartAnimation1 = Tween(begin: 160.0, end: 200.0).animate(CurvedAnimation(
         curve: Curves.bounceOut, parent: _heartAnimationController1));
     _heartAnimationController1.forward();
+
   }
+
+
   @override
   void dispose() {
 
@@ -33,7 +37,7 @@ class _loginState extends State<login>  with TickerProviderStateMixin{
   String email;
   bool loading = false;
   String password;
-  bool has_error=false;
+  bool hasError=false;
   bool _showPassword = false;
   String error="enter username and password";
 
@@ -184,7 +188,7 @@ class _loginState extends State<login>  with TickerProviderStateMixin{
               ),
             ),
             SizedBox(
-              child: Text(error,style: TextStyle(color:(has_error)?Colors.red:Colors.green),),
+              child: Text(error,style: TextStyle(color:(hasError)?Colors.red:Colors.green),),
               height: 50,
             ),
             Center(

@@ -6,6 +6,7 @@ import 'package:cardio_ai/models/inputPromptDataModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class Inputs extends StatefulWidget {
@@ -25,15 +26,14 @@ TextEditingController _textEditingController;
 List<inputPromptDataModel> _prompt = prompt;
 
 class _InputsState extends State<Inputs> with TickerProviderStateMixin {
-  int qCount = 0;
-
+  int qCount;
 
   bool showInfo = true;
   @override
   void initState() {
     _floatIconController = AnimateIconController();
     setState(() {
-      qCount=widget.index;
+      qCount = widget.index;
     });
     // TODO: implement initState
     super.initState();
@@ -41,17 +41,12 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (BuildContext
-                    context) =>
-                        Home())
-            ),
+                MaterialPageRoute(builder: (BuildContext context) => Home())),
           ),
           centerTitle: true,
           title: Text(
@@ -80,17 +75,16 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
                       itemWidth: 300.0,
                       itemHeight: 400.0,
                       itemBuilder: (BuildContext context, int index) {
-
                         return InputCard(
                           index: qCount,
                           prompt: _prompt[qCount],
                         );
-
                       },
                       onIndexChanged: (index) {
                         setState(() {
                           qCount = index;
-                          _textEditingController.text=(_prompt[qCount].val)??0.toString();
+                          _textEditingController.text =
+                              (_prompt[qCount].val) ?? 0.toString();
                           print(_prompt[qCount].val);
                           // _textEditingController.text="";
                         });
@@ -156,7 +150,7 @@ class _InputCardState extends State<InputCard> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _textEditingController?.dispose();
     super.dispose();
   }
@@ -206,34 +200,37 @@ class _InputCardState extends State<InputCard> {
                     ),
                   ),
                 )),
-            TextFormField(
-              controller: _textEditingController,
-              style: TextStyle(color: Colors.white),
-              decoration: const InputDecoration(
-                icon: Icon(
-                  Icons.keyboard_arrow_right,
-                  color: Colors.white,
-                ),
-                hintStyle: TextStyle(color: Colors.white38),
-                labelStyle: TextStyle(color: Colors.white),
-                hintText: "Make sure value is in accurate",
-                labelText: "Input",
-              ),
-              validator: (String value) {
-                return (value != null && value.contains('@'))
-                    ? 'Do not use the @ char.'
-                    : null;
-              },
-              keyboardType: TextInputType.number,
-              onChanged:(val1){
-
-                  textVal=val1;
-                  print("valchanged");
-                  _prompt[widget.index].val=val1;
-
-              },
-
-            )
+            (widget.prompt.isDouble)
+                ? TextFormField(
+                    controller: _textEditingController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    style: TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      icon: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: Colors.white,
+                      ),
+                      hintStyle: TextStyle(color: Colors.white38),
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintText: "Make sure value is in accurate",
+                      labelText: "Input",
+                    ),
+                    validator: (value) {
+                      return (value != null && value.contains('@'))
+                          ? 'Do not use the @ char.'
+                          : null;
+                    },
+                    onChanged: (val1) {
+                      textVal = val1;
+                      print("valchanged");
+                      _prompt[widget.index].val = val1;
+                    },
+                  )
+                : DropDownList(
+                    prompt: widget.prompt,
+                    index: widget.index,
+                  ),
           ],
         )),
       ),
@@ -241,3 +238,35 @@ class _InputCardState extends State<InputCard> {
   }
 }
 
+class DropDownList extends StatefulWidget {
+  const DropDownList({Key key, this.prompt, this.index}) : super(key: key);
+  final inputPromptDataModel prompt;
+  final int index;
+  @override
+  _DropDownListState createState() => _DropDownListState();
+}
+
+class _DropDownListState extends State<DropDownList> {
+  @override
+  Widget build(BuildContext context) {
+    String dropdownValue = _prompt[widget.index].val??_prompt[widget.index].options[0];
+    return DropdownButton<String>(
+      value: dropdownValue,
+      onChanged: (String newValue) {
+        setState(() {
+          _prompt[widget.index].val=newValue;
+          dropdownValue = newValue;
+        });
+      },
+      dropdownColor: darkAccent,
+      items: _prompt[widget.index]
+          .options
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value, style: TextStyle(color: Colors.white)),
+        );
+      }).toList(),
+    );
+  }
+}

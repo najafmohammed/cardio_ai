@@ -33,7 +33,7 @@ class _ModalTileState extends State<ModalTile> {
             style: whitePopSmall,
           ),
           subtitle: Text(
-            widget.input.val.toString()+widget.input.unit,
+            widget.input.val.toString()+" "+widget.input.unit,
             style: whitePopSmall,
           ),
           trailing: GestureDetector(
