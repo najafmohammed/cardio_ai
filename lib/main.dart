@@ -15,7 +15,9 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MaterialApp(home: Splash()));
+  runApp(MaterialApp(
+      theme: ThemeData.dark(),
+      home: Splash()));
 }
 
 class Splash extends StatefulWidget {
