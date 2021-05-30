@@ -1,48 +1,143 @@
-import 'package:cardio_ai/Core/Prediction.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
-import 'package:countup/countup.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Assistant extends StatefulWidget {
-  Assistant({Key key}) : super(key: key);
-
-  @override
-  _AssistantState createState() => _AssistantState();
+  Expansionpanelstate createState() => Expansionpanelstate();
 }
 
-class _AssistantState extends State<Assistant> {
-  var prediction = 0.0;
-  List<double> test = [57, 0, 0, 140, 241, 0, 1, 123, 1, 0.2, 1, 0, 3];
-  @override
+class NewItem {
+  bool isExpanded;
+  final String header;
+  final Widget body;
+  final Icon iconpic;
+  int notifications;
+  NewItem(this.isExpanded, this.header, this.body, this.iconpic,
+      this.notifications);
+}
+
+class Expansionpanelstate extends State<Assistant> {
+  List<NewItem> items = <NewItem>[
+    NewItem(
+        true,
+        'Reminders',
+        Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+              Text(
+                'Doctors appointment at 10:30 am',
+                style: whitePopSmall,
+              ),
+            ])),
+        Icon(
+          Icons.notifications,
+          color: Colors.white,
+        ),
+        1),
+    NewItem(
+        false,
+        'News',
+        Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(children: <Widget>[
+              Text(
+                'Nothing new',
+                style: whitePopSmall,
+              ),
+            ])),
+        Icon(
+          Icons.article,
+          color: Colors.white,
+        ),
+        0),
+    NewItem(
+        false,
+        'Tips',
+        Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(children: <Widget>[
+              Text(
+                'data',
+                style: whitePopSmall,
+              ),
+            ])),
+        Icon(
+          Icons.info_outline,
+          color: Colors.white,
+        ),
+        0),
+    NewItem(
+        false,
+        'Test',
+        Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(children: <Widget>[
+              Text(
+                'data',
+                style: whitePopSmall,
+              ),
+            ])),
+        Icon(
+          Icons.analytics_outlined,
+          color: Colors.white,
+        ),
+        0),
+  ];
+  ListView List_Criteria;
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              test.toString(),
-              style: whitePopSmall,
-            ),
+    List_Criteria = ListView(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: ExpansionPanelList(
+            expansionCallback: (int index, bool isExpanded) {
+              setState(() {
+                items[index].isExpanded = !items[index].isExpanded;
+              });
+            },
+            children: items.map((NewItem item) {
+              return ExpansionPanel(
+                backgroundColor: darkCard,
+                canTapOnHeader: true,
+                headerBuilder: (BuildContext context, bool isExpanded) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ListTile(
+                        tileColor: darkCard,
+                        leading: item.iconpic,
+                        trailing: (item.notifications != 0)
+                            ? Text(
+                                item.notifications.toString(),
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            : SizedBox(
+                                height: 10,
+                              ),
+                        // trailing: Icon(Icons.add_to_drive,color: Colors.white,),
+                        title: Text(
+                          item.header,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        )),
+                  );
+                },
+                isExpanded: item.isExpanded,
+                body: item.body,
+              );
+            }).toList(),
           ),
-          Countup(
-            begin: (0),
-            end: prediction,
-            style: whitePopLarge(Colors.white),
-            duration: Duration(seconds: 2),
-          ),
-          ElevatedButton(
-              onPressed: () {
-                var a = score(test);
-                setState(() {
-                  prediction = (a[0] * 100).toDouble();
-                });
-                print(a[0]);
-              },
-              child: Text("predict"))
-        ],
-      ),
+        ),
+      ],
     );
+    return List_Criteria;
   }
 }

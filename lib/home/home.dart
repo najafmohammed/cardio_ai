@@ -1,11 +1,11 @@
 import 'package:cardio_ai/authentication/auth.dart';
 import 'package:cardio_ai/authentication/login.dart';
+import 'package:cardio_ai/homePages/assistant.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cardio_ai/homePages/home_page.dart';
 import 'package:cardio_ai/homePages/Settings.dart';
-import 'package:cardio_ai/homePages/Assistant.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
