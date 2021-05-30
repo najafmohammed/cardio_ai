@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
-
-
 class Inputs extends StatefulWidget {
   const Inputs({Key key, this.index}) : super(key: key);
   final int index;
@@ -18,7 +16,8 @@ class Inputs extends StatefulWidget {
   @override
   _InputsState createState() => _InputsState();
 }
-Color editColor=Colors.deepPurple;
+
+Color editColor = Colors.deepPurple;
 double dragTargetWidth = 50;
 Color dragTargetColor = darkCard;
 AnimateIconController _floatIconController;
@@ -83,14 +82,11 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
                         );
                       },
                       onIndexChanged: (index) {
-
                         setState(() {
-                          if(index==_prompt.length-1 ){
-
-                            editColor=Colors.green;
-                          }
-                          else{
-                            editColor=Colors.deepPurple;
+                          if (index == _prompt.length - 1) {
+                            editColor = Colors.green;
+                          } else {
+                            editColor = Colors.deepPurple;
                           }
                           qCount = index;
                           _textEditingController.text =
@@ -122,10 +118,12 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
             endTooltip: 'Complete ',
             onStartIconPress: () {
               showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return BottomModal(prompt: prompt);
-                  },isScrollControlled: true).then((value) => {_floatIconController.animateToStart()});
+                      context: context,
+                      builder: (context) {
+                        return BottomModal(prompt: prompt);
+                      },
+                      isScrollControlled: true)
+                  .then((value) => {_floatIconController.animateToStart()});
 
               print("Clicked on Add Icon");
               return true;
@@ -260,12 +258,13 @@ class DropDownList extends StatefulWidget {
 class _DropDownListState extends State<DropDownList> {
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = _prompt[widget.index].val??_prompt[widget.index].options[0];
+    String dropdownValue =
+        _prompt[widget.index].val ?? _prompt[widget.index].options[0];
     return DropdownButton<String>(
       value: dropdownValue,
       onChanged: (String newValue) {
         setState(() {
-          _prompt[widget.index].val=newValue;
+          _prompt[widget.index].val = newValue;
           dropdownValue = newValue;
         });
       },

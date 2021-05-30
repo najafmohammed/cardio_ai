@@ -40,7 +40,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Stack(alignment: Alignment.center, children: [
                     CircleAvatar(
@@ -215,10 +215,6 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      Icon(
-                        Icons.arrow_upward,
-                        color: Colors.green,
-                      )
                     ],
                   ),
                   // child: Text("89",style: whitePop,)),
