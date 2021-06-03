@@ -1,17 +1,17 @@
 import 'package:cardio_ai/authentication/auth.dart';
-import 'package:cardio_ai/authentication/registration.dart';
+import 'package:cardio_ai/authentication/login.dart';
 import 'package:cardio_ai/home/home.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:cardio_ai/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
+class Registration extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _RegistrationState createState() => _RegistrationState();
 }
 
-class _LoginState extends State<Login>  with TickerProviderStateMixin{
+class _RegistrationState extends State<Registration>  with TickerProviderStateMixin{
 
   Animation _heartAnimation1;
   AnimationController _heartAnimationController1;
@@ -36,6 +36,7 @@ class _LoginState extends State<Login>  with TickerProviderStateMixin{
 
   final AuthService _auth = AuthService();
   String email;
+  String name;
   bool loading = false;
   String password;
   bool hasError=false;
@@ -56,7 +57,7 @@ class _LoginState extends State<Login>  with TickerProviderStateMixin{
               splashColor: Colors.red,
               onTap: (){
                 _heartAnimationController1.reset();
-              _heartAnimationController1.forward();},
+                _heartAnimationController1.forward();},
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +113,38 @@ class _LoginState extends State<Login>  with TickerProviderStateMixin{
               ],
             ),
             SizedBox(height: 20,),
+            Center(
+              child: new Container(
+                height: 80,
+                width: 340,
+                child: new TextFormField(
+                  onChanged:(val){
+                    _heartAnimationController1.reset();
+                    _heartAnimationController1.forward();
+                    setState(()=>name=val);
+                  },
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w500,
+                  ),
+                  decoration: new InputDecoration(
+                    hintText: 'Name',
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    labelText: 'Name',
+                    suffixIcon: Icon(
+                      Icons.check_circle,
+                      color: Colors.white,
+                    ),
+                    labelStyle: new TextStyle(color: Colors.white),
+                  ),
+                  cursorColor: Colors.white,
 
+                ),
+              ),
+            ),
             Center(
               child: new Container(
                 height: 80,
@@ -200,27 +232,27 @@ class _LoginState extends State<Login>  with TickerProviderStateMixin{
                   onPressed: ()async {
 
                     setState(() => loading = true);
-                      dynamic result = await _auth.signInwithEmailAndPassword(email, password);
-                      if (result == null) {
-                        setState(() {
-                          error = 'could not sign in';
-                          loading = false;
-                        });
-                      }
-                      else{
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => Home()));
-                      }
+                    dynamic result = await _auth.regWithEmailAndPassword(email, password,name);
+                    if (result == null) {
+                      setState(() {
+                        error = 'could not register';
+                        loading = false;
+                      });
+                    }
+                    else{
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => Home()));
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.redAccent,
                     shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0),
-                  ),
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
                   ),
 
 
                   child: Text(
-                    "Sign In",
+                    "Register",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: "Poppins",fontWeight: FontWeight.w600,
@@ -235,11 +267,11 @@ class _LoginState extends State<Login>  with TickerProviderStateMixin{
             Center(
               child: InkWell(
                 onTap: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => Registration()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => Login()));
                 },
                 child: Container(
                   child: Text(
-                    "Register",
+                    "Login",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: "Poppins",fontWeight: FontWeight.w300,

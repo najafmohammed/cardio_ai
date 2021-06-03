@@ -40,22 +40,23 @@ class AuthService{
     }
   }
 
-  //register with email and password
-  // Future regWithEmailAndPassword(String email,String password,String userName)async{
-  //   try{
-  //     UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-  //     User user = result.user;
-  //     //create a new document for storing user data
-  //     // await DatabaseService(uid:user.uid).setUserData(1, 'n/a', 'n/a','n/a', 'n/a','n/a', 'n/a', 'n/a','n/a',false);
-  //     // await DatabaseService(uid: user.uid).updateName(userName);
-  //     // print(DatabaseService);
-  //     print("REGISTER DONE:::");
-  //     return _userFromFirebaseUser(user);
-  //   }catch(e){
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+  // register with email and password
+  Future regWithEmailAndPassword(String email,String password,String userName)async{
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User user = result.user;
+
+      //create a new document for storing user data
+      // await DatabaseService(uid:user.uid).setUserData(1, 'n/a', 'n/a','n/a', 'n/a','n/a', 'n/a', 'n/a','n/a',false);
+      // await DatabaseService(uid: user.uid).updateName(userName);
+      // print(DatabaseService);
+      print("REGISTER DONE:::");
+      return _userFromFirebaseUser(user);
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
 
   //sign out
   Future signout() async{

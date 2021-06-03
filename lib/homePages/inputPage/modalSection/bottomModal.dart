@@ -1,5 +1,6 @@
 
 import 'package:auto_animated/auto_animated.dart';
+import 'package:cardio_ai/Core/Prediction.dart';
 import 'package:cardio_ai/homePages/inputPage/InputPrompt_data.dart';
 import 'package:cardio_ai/homePages/inputPage/modalSection/modal_tile.dart';
 import 'package:cardio_ai/models/inputPromptDataModel.dart';
@@ -176,7 +177,8 @@ class _BottomModalState extends State<BottomModal>
                 print(list);
                 await record.add({"entry": list,
                 "patient name":patientName,
-                "op number":opNumber});
+                "op number":opNumber,
+                "prediction":score(list)[0]});
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
