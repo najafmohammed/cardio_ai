@@ -62,12 +62,12 @@ class _BottomModalState extends State<BottomModal>
       reverseDuration: Duration(milliseconds: 500),
     );
     controller.repeat(reverse: true);
-
     @override
     dispose() {
-      controller.dispose(); // you need this
+      controller.dispose();
       super.dispose();
     }
+
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -175,7 +175,7 @@ class _BottomModalState extends State<BottomModal>
                 print(patientName);
                 var list = Processing.processPatientRecord(widget.prompt);
                 print(list);
-                await record.add({"entry": list,
+                await record.add({"recent entry": list,
                 "patient name":patientName,
                 "op number":opNumber,
                 "prediction":score(list)[0]});

@@ -48,7 +48,11 @@ class AuthService{
       User user = result.user;
       final CollectionReference record =
       FirebaseFirestore.instance.collection('Patient Record');
-      record.doc(user.uid).set({"name":userName});
+      final CollectionReference global =
+      FirebaseFirestore.instance.collection('Global');
+      var _op=await global.doc("OP").get();
+      var op=_op.get("value");
+      await record.doc(user.uid).set({"name":userName,"op number":op+1});
       //create a new document for storing user data
       // await DatabaseService(uid:user.uid).setUserData(1, 'n/a', 'n/a','n/a', 'n/a','n/a', 'n/a', 'n/a','n/a',false);
       // await DatabaseService(uid: user.uid).updateName(userName);
