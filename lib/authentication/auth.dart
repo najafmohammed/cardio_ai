@@ -1,4 +1,5 @@
 import 'package:cardio_ai/models/UserModel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService{
@@ -45,7 +46,9 @@ class AuthService{
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
-
+      final CollectionReference record =
+      FirebaseFirestore.instance.collection('Patient Record');
+      record.doc(user.uid).set({"name":userName});
       //create a new document for storing user data
       // await DatabaseService(uid:user.uid).setUserData(1, 'n/a', 'n/a','n/a', 'n/a','n/a', 'n/a', 'n/a','n/a',false);
       // await DatabaseService(uid: user.uid).updateName(userName);
