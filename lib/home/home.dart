@@ -1,12 +1,11 @@
 import 'package:cardio_ai/authentication/auth.dart';
 import 'package:cardio_ai/authentication/login.dart';
 import 'package:cardio_ai/homePages/assistant.dart';
+import 'package:cardio_ai/homePages/PhoneSettings.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cardio_ai/homePages/home_page.dart';
-import 'package:cardio_ai/homePages/Settings.dart';
-
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
 
@@ -15,13 +14,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   int PageIndex = 1;
 
   GlobalKey _bottomNavigationKey = GlobalKey();
 
   final Assistant _assistant = new Assistant();
   final HomePage _home = new HomePage();
-  final Settings _settings = new Settings();
+  final PhoneSettings _settings = new PhoneSettings();
 
   Widget _showpage = new HomePage();
   Widget _page(int page) {

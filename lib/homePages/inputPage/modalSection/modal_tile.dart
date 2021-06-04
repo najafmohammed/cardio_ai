@@ -33,17 +33,14 @@ class _ModalTileState extends State<ModalTile> {
             style: whitePopSmall,
           ),
           subtitle: Text(
-            widget.input.val.toString()+" "+widget.input.unit,
+            widget.input.val.toString() + " " + widget.input.unit,
             style: whitePopSmall,
           ),
           trailing: GestureDetector(
-              onTap: (){
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (BuildContext
-                        context) =>
-                            Inputs(index: widget.index)));
-
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Inputs(index: widget.index)));
               },
               child: Icon(Icons.edit, color: Colors.white)),
         ));

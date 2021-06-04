@@ -2,14 +2,14 @@ import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-class Settings extends StatefulWidget {
-  Settings({Key key}) : super(key: key);
+class PhoneSettings extends StatefulWidget {
+  PhoneSettings({Key key}) : super(key: key);
 
   @override
-  _SettingsState createState() => _SettingsState();
+  _PhoneSettingsState createState() => _PhoneSettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _PhoneSettingsState extends State<PhoneSettings> {
   bool notification=true;
   @override
   Widget build(BuildContext context) {

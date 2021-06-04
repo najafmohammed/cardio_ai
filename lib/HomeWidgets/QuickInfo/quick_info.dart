@@ -1,7 +1,9 @@
 import 'package:cardio_ai/homePages/inputPage/inputs.dart';
 import 'package:cardio_ai/models/quickInfoModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countup/countup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,11 +19,46 @@ class QuickInfo extends StatefulWidget {
 
 class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
   bool top = false;
+  bool newUser = true;
   @override
   void initState() {
+    _initialiseData();
     if (widget.info.title == "AI Prediction") top = true;
-
     super.initState();
+  }
+
+  var entry;
+  var prediction;
+  var value=0;
+  bool sugarLevel = false;
+  Timestamp date;
+  void _initialiseData() async {
+    final CollectionReference record =
+        FirebaseFirestore.instance.collection('Patient Record');
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser;
+    final uid = user.uid;
+
+    var _userData = await record.doc(uid).get();
+    setState(() {
+      entry = _userData.get("entry");
+      date = _userData.get("date");
+      prediction = _userData.get("prediction");
+      newUser = _userData.get("new");
+      print(newUser);
+    });
+    if (widget.info.title == "AT Prediction") value = prediction;
+    if (widget.info.title == "Heart Rate") value = entry[7];
+    if (widget.info.title == "Blood pressure") value = entry[3];
+    if (widget.info.title == "Fasting Blood Sugar") {
+      value = 120;
+      if (entry[5] == 0) {
+        sugarLevel = false;
+      } else {
+        sugarLevel = true;
+      }
+    }
+    if (widget.info.title == "Cholesterol") value = entry[4];
   }
 
   @override
@@ -80,62 +117,26 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                         "last Reading",
                                         style: whitePopSmall,
                                       ),
-                                      Text(
-                                        DateFormat('dd-MM-yyyy')
-                                            .format(widget.info.lastDate)
-                                            .toString(),
-                                        style: whitePopSmall,
-                                      ),
+                                      (!newUser)
+                                          ? Text(
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(date.toDate())
+                                                  .toString(),
+                                              style: whitePopSmall,
+                                            )
+                                          : Text(
+                                              "No Previous test",
+                                              style: whitePopSmall,
+                                            ),
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Previous value",
-                                        style: whitePopSmall,
-                                      ),
-                                      Text(
-                                        widget.info.prev.toString(),
-                                        style: whitePopSmall,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Remarks",
-                                        style: whitePopSmall,
-                                      ),
-                                      Text(
-                                        widget.info.remark,
-                                        style: whitePopSmall,
-                                      ),
-                                    ],
+                                  SizedBox(
+                                    height: 10,
                                   ),
                                   (top == true)
                                       ? Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Test Accuracy",
-                                              style: whitePopSmall,
-                                            ),
-                                            Text(
-                                              widget.info.remark,
-                                              style: whitePopSmall,
-                                            ),
-                                          ],
-                                        )
-                                      : Container(),
-                                  (top == true)
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                              MainAxisAlignment.spaceAround,
                                           children: [
                                             ElevatedButton(
                                               onPressed: () {
@@ -203,11 +204,25 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                     children: [
                       Column(
                         children: [
-                          Countup(
-                            begin: (0),
-                            end: widget.info.value.toDouble(),
-                            style: whitePopLarge(widget.info.colorValue),
-                            duration: Duration(seconds: 2),
+                          Row(
+                            children: [
+                              (widget.info.title=="Fasting Blood Sugar")?
+                              (sugarLevel)
+                                  ? Text(
+                                      ">",
+                                      style: whitePopSmall,
+                                    )
+                                  : Text(
+                                "<",
+                                style: whitePopSmall,
+                              ):Container(),
+                              Countup(
+                                begin: (0),
+                                end: value.toDouble(),
+                                style: whitePopLarge(widget.info.colorValue),
+                                duration: Duration(seconds: 2),
+                              ),
+                            ],
                           ),
                           Text(
                             widget.info.unit,

@@ -59,7 +59,7 @@ class Expansionpanelstate extends State<Assistant> {
             padding: EdgeInsets.all(20.0),
             child: Column(children: <Widget>[
               Text(
-                'data',
+                'Nothing new',
                 style: whitePopSmall,
               ),
             ])),
@@ -75,7 +75,7 @@ class Expansionpanelstate extends State<Assistant> {
             padding: EdgeInsets.all(20.0),
             child: Column(children: <Widget>[
               Text(
-                'data',
+                'Nothing new',
                 style: whitePopSmall,
               ),
             ])),
