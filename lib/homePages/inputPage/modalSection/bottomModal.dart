@@ -122,6 +122,7 @@ class _BottomModalState extends State<BottomModal>
                 var predict=score(list)[0];
                 await record.doc(uid).update({
                   "entry": list,
+                  "new":false,
                   "prediction": predict
                 });
                 await record.doc(uid).collection("history").add({

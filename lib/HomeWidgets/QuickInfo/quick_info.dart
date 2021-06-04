@@ -29,7 +29,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
 
   var entry;
   var prediction;
-  var value=0;
+  var value;
   bool sugarLevel = false;
   Timestamp date;
   void _initialiseData() async {
@@ -53,6 +53,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
     if (widget.info.title == "Fasting Blood Sugar") {
       value = 120;
       if (entry[5] == 0) {
+        value=120;
         sugarLevel = false;
       } else {
         sugarLevel = true;
@@ -63,6 +64,8 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+    print(widget.info.title);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
       child: Card(
@@ -216,7 +219,13 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                 "<",
                                 style: whitePopSmall,
                               ):Container(),
+                              (top)?
                               Countup(
+                                begin: (0),
+                                end: prediction*100.toDouble(),
+                                style: whitePopLarge(widget.info.colorValue),
+                                duration: Duration(seconds: 2),
+                              ):Countup(
                                 begin: (0),
                                 end: value.toDouble(),
                                 style: whitePopLarge(widget.info.colorValue),
