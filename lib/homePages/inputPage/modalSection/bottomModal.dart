@@ -1,4 +1,3 @@
-
 import 'package:auto_animated/auto_animated.dart';
 import 'package:cardio_ai/Core/Prediction.dart';
 import 'package:cardio_ai/homePages/inputPage/InputPrompt_data.dart';
@@ -7,6 +6,7 @@ import 'package:cardio_ai/models/inputPromptDataModel.dart';
 import 'package:cardio_ai/services/Processing.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BottomModal extends StatefulWidget {
@@ -50,8 +50,6 @@ class _BottomModalState extends State<BottomModal>
   final List<inputPromptDataModel> prompt;
 
   _BottomModalState(this.prompt);
-  String patientName="";
-  String opNumber="";
   @override
   Widget build(BuildContext context) {
     AnimationController controller;
@@ -67,7 +65,6 @@ class _BottomModalState extends State<BottomModal>
       controller.dispose();
       super.dispose();
     }
-
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -100,61 +97,6 @@ class _BottomModalState extends State<BottomModal>
               ],
             ),
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width-50,
-            child: TextFormField(
-              style: TextStyle(color: Colors.white),
-              decoration: const InputDecoration(
-                icon: Icon(
-                  Icons.keyboard_arrow_right,
-                  color: Colors.white,
-                ),
-                hintStyle: TextStyle(color: Colors.white38),
-                labelStyle: TextStyle(color: Colors.white),
-                hintText: "Enter patient name",
-                labelText: "Patient Name",
-              ),
-              validator: (value) {
-                return (value != null && value.contains('@'))
-                    ? 'Do not use the @ char.'
-                    : null;
-              },
-              onChanged: (val1) {
-                patientName=val1;
-                setState(() {
-                  patientName=val1;
-                });
-              },
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width-50,
-            child: TextFormField(
-              style: TextStyle(color: Colors.white),
-              decoration: const InputDecoration(
-                icon: Icon(
-                  Icons.keyboard_arrow_right,
-                  color: Colors.white,
-                ),
-                hintStyle: TextStyle(color: Colors.white38),
-                labelStyle: TextStyle(color: Colors.white),
-                hintText: "Enter patient OP Number",
-                labelText: "OP Number",
-              ),
-              validator: (value) {
-                return (value != null && value.contains('@'))
-                    ? 'Do not use the @ char.'
-                    : null;
-              },
-              onChanged: (val1) {
-                print("hello"+val1);
-                  opNumber=val1;
-                setState(() {
-                  opNumber=val1;
-                });
-              },
-            ),
-          ),
           Expanded(
               child: LiveList.options(
             options: options,
@@ -171,14 +113,22 @@ class _BottomModalState extends State<BottomModal>
                 prompt.forEach((element) {
                   print(element.val);
                 });
-                print(opNumber);
-                print(patientName);
+                DateTime date=DateTime.now();
                 var list = Processing.processPatientRecord(widget.prompt);
                 print(list);
-                await record.add({"recent entry": list,
-                "patient name":patientName,
-                "op number":opNumber,
-                "prediction":score(list)[0]});
+                final FirebaseAuth auth = FirebaseAuth.instance;
+                final User user = auth.currentUser;
+                final uid = user.uid;
+                var predict=score(list)[0];
+                await record.doc(uid).update({
+                  "entry": list,
+                  "prediction": predict
+                });
+                await record.doc(uid).collection("history").add({
+                  "entry": list,
+                  "date":date,
+                  "prediction": predict
+                });
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(

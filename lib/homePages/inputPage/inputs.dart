@@ -212,8 +212,7 @@ class _InputCardState extends State<InputCard> {
             (widget.prompt.isDouble)
                 ? TextFormField(
                     controller: _textEditingController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       icon: Icon(
