@@ -19,7 +19,7 @@ class BottomModal extends StatefulWidget {
 final options = LiveOptions(
   showItemInterval: Duration(milliseconds: 200),
   showItemDuration: Duration(milliseconds: 200),
-  visibleFraction: 0.05,
+  visibleFraction: 0.85,
   reAnimateOnVisibility: false,
 );
 
@@ -51,6 +51,10 @@ class _BottomModalState extends State<BottomModal>
 
   _BottomModalState(this.prompt);
   @override
+   dispose() {
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     AnimationController controller;
 
@@ -60,11 +64,7 @@ class _BottomModalState extends State<BottomModal>
       reverseDuration: Duration(milliseconds: 500),
     );
     controller.repeat(reverse: true);
-    @override
-    dispose() {
-      controller.dispose();
-      super.dispose();
-    }
+
 
     return Scaffold(
       backgroundColor: Colors.black,

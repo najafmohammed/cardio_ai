@@ -1,4 +1,6 @@
+import 'package:cardio_ai/history/historyList.dart';
 import 'package:cardio_ai/homePages/inputPage/inputs.dart';
+import 'package:cardio_ai/models/historyModel.dart';
 import 'package:cardio_ai/models/quickInfoModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -173,7 +175,32 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                                       vertical: 0,
                                                       horizontal: 8),
                                               child: ElevatedButton(
-                                                onPressed: () {},
+                                                onPressed: () async{
+                                                  List<HistoryModel> _feedlistSnapshot(QuerySnapshot snapshot) {
+                                                    return snapshot.docs.map((doc) {
+                                                      return HistoryModel(
+                                                          prediction: doc.get("prediction"), date: doc.get("date").toDate());
+                                                    }).toList();
+                                                  }
+
+                                                  final FirebaseAuth auth = FirebaseAuth.instance;
+                                                  final User user = auth.currentUser;
+                                                  final uid = user.uid;
+                                                  QuerySnapshot a = await FirebaseFirestore.instance
+                                                      .collection('Patient Record')
+                                                      .doc(uid)
+                                                      .collection("history")
+                                                      .get();
+                                                  var b = _feedlistSnapshot(a);
+
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                          context) =>
+                                                              HistoryList(
+                                                                  list: b,
+                                                              )));
+                                                },
                                                 style: ElevatedButton.styleFrom(
                                                   padding:
                                                       const EdgeInsets.all(1.0),
