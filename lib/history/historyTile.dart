@@ -1,5 +1,7 @@
+import 'package:cardio_ai/history/historyInfo.dart';
 import 'package:cardio_ai/models/historyModel.dart';
 import 'package:cardio_ai/shared/ColorApp.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HistoryTile extends StatefulWidget {
@@ -15,6 +17,12 @@ class _HistoryTileState extends State<HistoryTile> {
     return InkWell(
       onTap: () {
         print(widget.input.prediction);
+        showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return HistoryInfo(entry: widget.input.entry,);
+            },
+            isScrollControlled: true);
       },
       child: Card(
           color: darkCard,
@@ -31,7 +39,7 @@ class _HistoryTileState extends State<HistoryTile> {
                 color: Colors.white,
               ),
               title: Text(
-                widget.input.date.toString(),
+                widget.input.date.toLocal().toString(),
                 style: whitePopSmall,
               ),
               trailing: GestureDetector(
@@ -43,18 +51,3 @@ class _HistoryTileState extends State<HistoryTile> {
     );
   }
 }
-
-class HistoryInfo extends StatefulWidget {
-  const HistoryInfo({Key key}) : super(key: key);
-
-  @override
-  _HistoryInfoState createState() => _HistoryInfoState();
-}
-
-class _HistoryInfoState extends State<HistoryInfo> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-

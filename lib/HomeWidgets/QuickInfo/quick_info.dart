@@ -178,8 +178,8 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                                 onPressed: () async{
                                                   List<HistoryModel> _feedlistSnapshot(QuerySnapshot snapshot) {
                                                     return snapshot.docs.map((doc) {
-                                                      return HistoryModel(
-                                                          prediction: doc.get("prediction"), date: doc.get("date").toDate());
+                                                      return HistoryModel(entry: doc.get("entry"),
+                                                          prediction: doc.get("prediction"), date: doc.get("date").toDate(),uid: doc.id);
                                                     }).toList();
                                                   }
 
