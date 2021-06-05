@@ -189,7 +189,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                                   QuerySnapshot a = await FirebaseFirestore.instance
                                                       .collection('Patient Record')
                                                       .doc(uid)
-                                                      .collection("history").orderBy("date")
+                                                      .collection("history").orderBy("date",descending:true)
                                                       .get();
                                                   var b = _feedlistSnapshot(a);
 

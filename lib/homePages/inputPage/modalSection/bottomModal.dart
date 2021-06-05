@@ -123,7 +123,8 @@ class _BottomModalState extends State<BottomModal>
                 await record.doc(uid).update({
                   "entry": list,
                   "new":false,
-                  "prediction": predict
+                  "prediction": predict,
+                  "date":date,
                 });
                 await record.doc(uid).collection("history").add({
                   "entry": list,
