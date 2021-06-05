@@ -29,4 +29,11 @@ TextStyle whitePopSmall = new TextStyle(
   fontSize: 13,
   fontWeight: FontWeight.w400,
 );
+TextStyle whitePopSmall2 = new TextStyle(
+  color: Colors.white,
+  fontFamily: "Poppins",
+  fontSize: 11,
+  fontWeight: FontWeight.w400,
+);
+
 

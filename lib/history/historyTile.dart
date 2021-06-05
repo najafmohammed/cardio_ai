@@ -20,7 +20,9 @@ class _HistoryTileState extends State<HistoryTile> {
         showModalBottomSheet(
             context: context,
             builder: (context) {
-              return HistoryInfo(entry: widget.input.entry,);
+              return HistoryInfo(
+                entry: widget.input.entry,
+              );
             },
             isScrollControlled: true);
       },
@@ -39,8 +41,17 @@ class _HistoryTileState extends State<HistoryTile> {
                 color: Colors.white,
               ),
               title: Text(
-                widget.input.date.toLocal().toString(),
+                widget.input.date.day.toString() +
+                    "-" +
+                    widget.input.date.month.toString() +
+                    "-" +
+                    widget.input.date.year.toString(),
                 style: whitePopSmall,
+              ),
+              subtitle: Text(
+                widget.input.date.hour.toString() +":" +
+              widget.input.date.minute.toString() ,
+                style: whitePopSmall2,
               ),
               trailing: GestureDetector(
                 child: Text(
