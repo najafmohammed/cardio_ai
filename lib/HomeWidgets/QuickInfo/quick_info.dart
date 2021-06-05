@@ -30,13 +30,13 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
   }
 
   var entry;
-  var prediction;
-  var value;
+  double prediction=0.0;
+  double value=0.0;
   bool sugarLevel = false;
   Timestamp date;
   void _initialiseData() async {
     final CollectionReference record =
-        FirebaseFirestore.instance.collection('Patient Record');
+    FirebaseFirestore.instance.collection('Patient Record');
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     final uid = user.uid;
@@ -48,20 +48,23 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
       prediction = _userData.get("prediction");
       newUser = _userData.get("new");
       print(newUser);
-    });
-    if (widget.info.title == "AT Prediction") value = prediction;
-    if (widget.info.title == "Heart Rate") value = entry[7];
-    if (widget.info.title == "Blood pressure") value = entry[3];
-    if (widget.info.title == "Fasting Blood Sugar") {
-      value = 120;
-      if (entry[5] == 0) {
-        value=120;
-        sugarLevel = false;
-      } else {
-        sugarLevel = true;
+
+    if (!newUser) {
+      if (widget.info.title == "AT Prediction") value = prediction;
+      if (widget.info.title == "Heart Rate") value =(entry[7].toDouble());
+      if (widget.info.title == "Blood pressure") value = (entry[3].toDouble());
+      if (widget.info.title == "Fasting Blood Sugar") {
+        value = 120;
+        if (entry[5] == 0) {
+          value = 120;
+          sugarLevel = false;
+        } else {
+          sugarLevel = true;
+        }
       }
+      if (widget.info.title == "Cholesterol") value = (entry[4].toDouble());
     }
-    if (widget.info.title == "Cholesterol") value = entry[4];
+    });
   }
 
   @override
@@ -130,7 +133,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                                               style: whitePopSmall,
                                             )
                                           : Text(
-                                              "No Previous test",
+                                              "n/a",
                                               style: whitePopSmall,
                                             ),
                                     ],
@@ -249,7 +252,7 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
                               (top)?
                               Countup(
                                 begin: (0),
-                                end: prediction*100.toDouble(),
+                                end: prediction*100,
                                 style: whitePopLarge(widget.info.colorValue),
                                 duration: Duration(seconds: 2),
                               ):Countup(
