@@ -47,7 +47,6 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
       date = _userData.get("date");
       prediction = _userData.get("prediction");
       newUser = _userData.get("new");
-      print(newUser);
 
     if (!newUser) {
       if (widget.info.title == "AT Prediction") value = prediction;
@@ -70,7 +69,6 @@ class _QuickInfoState extends State<QuickInfo> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
-    print(widget.info.title);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
       child: Card(

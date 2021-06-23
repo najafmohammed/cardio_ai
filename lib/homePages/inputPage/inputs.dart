@@ -36,7 +36,6 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
     setState(() {
       qCount = widget.index;
     });
-    // TODO: implement initState
     super.initState();
   }
 
@@ -91,7 +90,7 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
                           qCount = index;
                           _textEditingController.text =
                               (_prompt[qCount].val) ?? 0.toString();
-                          print(_prompt[qCount].val);
+
                           // _textEditingController.text="";
                         });
                       },
@@ -125,11 +124,11 @@ class _InputsState extends State<Inputs> with TickerProviderStateMixin {
                       isScrollControlled: true)
                   .then((value) => {_floatIconController.animateToStart()});
 
-              print("Clicked on Add Icon");
+
               return true;
             },
             onEndIconPress: () {
-              print("Clicked on Close Icon");
+
               return true;
             },
             duration: Duration(milliseconds: 900),
@@ -212,7 +211,8 @@ class _InputCardState extends State<InputCard> {
             (widget.prompt.isDouble)
                 ? TextFormField(
                     controller: _textEditingController,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       icon: Icon(
@@ -231,7 +231,6 @@ class _InputCardState extends State<InputCard> {
                     },
                     onChanged: (val1) {
                       textVal = val1;
-                      print("valchanged");
                       _prompt[widget.index].val = val1;
                     },
                   )

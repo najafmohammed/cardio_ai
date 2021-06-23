@@ -111,11 +111,11 @@ class _BottomModalState extends State<BottomModal>
                 final CollectionReference record =
                     FirebaseFirestore.instance.collection('Patient Record');
                 prompt.forEach((element) {
-                  print(element.val);
+
                 });
                 DateTime date=DateTime.now();
                 var list = Processing.processPatientRecord(widget.prompt);
-                print(list);
+
                 final FirebaseAuth auth = FirebaseAuth.instance;
                 final User user = auth.currentUser;
                 final uid = user.uid;

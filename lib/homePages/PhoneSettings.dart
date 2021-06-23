@@ -36,7 +36,7 @@ class _PhoneSettingsState extends State<PhoneSettings> {
                 leading: Icon(Icons.notifications,color: Colors.white,),
                 switchValue: notification,
                 onToggle: (bool value) {
-                  print(value);
+
                   setState(() {
                     notification=!notification;
                   });

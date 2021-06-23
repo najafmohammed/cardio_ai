@@ -16,7 +16,7 @@ class _HistoryTileState extends State<HistoryTile> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(widget.input.prediction);
+
         showModalBottomSheet(
             context: context,
             builder: (context) {
