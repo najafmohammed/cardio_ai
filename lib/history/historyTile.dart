@@ -55,7 +55,7 @@ class _HistoryTileState extends State<HistoryTile> {
               ),
               trailing: GestureDetector(
                 child: Text(
-                  widget.input.prediction.toString(),
+                  (widget.input.prediction*100).toString()+"%",
                   style: whitePopSmall,
                 ),
               ))),
