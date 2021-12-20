@@ -2,5 +2,5 @@
 
 Cardio vascular disease predictor
 
-Demo:https://cardio-ai-admin.netlify.app/#/
+Demo-admin:https://cardio-ai-admin.netlify.app/#/
 
